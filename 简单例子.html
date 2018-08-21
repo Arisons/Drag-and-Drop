@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拖拽drag和drop</title>
+	<style type="text/css">
+	* {padding: 0;margin: 0;}
+		.container{
+			height: 400px;
+			width: 600px;
+			background-color: #c0c0ce;
+			margin: 0 auto;
+			display: flex;
+		}
+		.box{
+			width:150px;
+			border:2px solid #a27171;
+			margin:10px;
+			flex:1;
+			flex-direction: row;
+		}
+		.box .p{
+			height: 30px;
+			line-height: 30px;
+			cursor: pointer;
+			background-color: #9a5990;
+			width: 100%;
+			text-align: center;
+			border:1px dotted #3a1414;
+		}
+	</style>
+</head>
+<body>
+	<div class='container'>
+		<div class="box">
+			<p class="p" id="p1" draggable=true>这是p1</p>
+			<p class="p" id="p2" draggable=true>这是p2</p>
+			<p class="p" id="p3" draggable=true>这是p3</p>
+			<p class="p" id="p4" draggable=true>这是p4</p>
+		</div>
+		<div class="box"></div>
+		<div class="box"></div>
+	</div>
+
+	<script type="text/javascript">
+		document.ondragstart = function(e){
+			// 源对象
+			console.log('drag开始');
+			console.log(e.target);
+			e.dataTransfer.setData('text/html',e.target.id);
+		}
+		document.ondragend = function(e){
+			console.log('drag结束');
+		}
+		document.ondragover = function(e){
+			console.log('dragover：只要鼠标不松，就会一直执行');
+			return false;
+		}
+		document.ondrop =function(e){
+			// 目标函数
+			var id=e.dataTransfer.getData('text/html');
+			e.target.appendChild(document.getElementById(id));
+		}
+	</script>
+</body>
+</html>
